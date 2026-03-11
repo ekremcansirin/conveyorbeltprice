@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/ekremcansirin/Downloads/fiyat-hesaplama.html -->
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bant Fiyat Hesaplama</title>
+<link href="./Bant Fiyat Hesaplama_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --border: #e0d9ce;
+    --accent: #1a472a;
+    --accent2: #2d6a4f;
+    --accent-light: #e8f4ec;
+    --text: #1c1c1c;
+    --muted: #8a8070;
+    --euro: #c9a84c;
+    --euro-light: #fdf6e3;
+    --danger: #c0392b;
+    --input-bg: #faf8f4;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* Header */
+  .header {
+    background: var(--accent);
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .header-title span {
+    display: block;
+    font-size: 11px;
+    font-weight: 300;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Main */
+  .main { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
+
+  /* Section */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .input-row:last-child { border-bottom: none; }
+
+  .input-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .input-label small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 130px;
+    flex-shrink: 0;
+    transition: border-color 0.15s;
+  }
+
+  .input-wrap:focus-within { border-color: var(--accent); }
+
+  .input-wrap input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 9px 10px;
+    width: 82px;
+    text-align: right;
+  }
+
+  .input-wrap input::placeholder { color: #ccc; font-size: 13px; }
+
+  .input-unit {
+    background: #f0ede6;
+    padding: 0 9px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    border-left: 1px solid var(--border);
+    min-height: 38px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Toggle profil */
+  .profil-toggle-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .toggle-label small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .toggle-switch {
+    width: 48px;
+    height: 26px;
+    background: #ddd;
+    border-radius: 13px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: left 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .toggle-switch.on {
+    background: var(--accent);
+  }
+
+  .toggle-switch.on::after { left: 25px; }
+
+  /* Profil alanı */
+  .profil-fields {
+    display: none;
+    border-top: 1px solid var(--border);
+    background: #f9f7f3;
+  }
+
+  .profil-fields.show { display: block; }
+
+  .profil-header {
+    padding: 8px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-bottom: 1px solid #c8e6c9;
+  }
+
+  /* Hesapla */
+  .calc-btn {
+    width: 100%;
+    padding: 17px;
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-top: 22px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .calc-btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,71,42,0.25); }
+  .calc-btn:active { transform: translateY(0); }
+
+  .reset-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.15s;
+  }
+
+  .reset-btn:hover { border-color: var(--muted); color: var(--text); }
+
+  /* Hata */
+  .error-msg {
+    background: #fdf0ef;
+    border: 1px solid #f5c6c2;
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* Sonuç */
+  .result-panel {
+    background: var(--card);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 20px;
+    display: none;
+    animation: fadeUp 0.3s ease;
+    box-shadow: 0 8px 32px rgba(26,71,42,0.12);
+  }
+
+  .result-panel.show { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    background: var(--accent);
+    padding: 12px 18px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Özet satırlar */
+  .result-summary {
+    padding: 16px 18px 0;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+
+  .summary-row .slabel { color: var(--muted); }
+  .summary-row .sval {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* Fiyat büyük satırlar */
+  .price-block {
+    margin: 14px 18px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 16px;
+    background: var(--input-bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .price-row:last-child { border-bottom: none; }
+
+  .price-row .plabel {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .price-row .pval {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .price-row.total {
+    background: var(--euro-light);
+    border-top: 2px solid var(--euro);
+  }
+
+  .price-row.total .plabel {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .price-row.total .pval {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--euro);
+  }
+
+  .euro-sign { font-size: 0.7em; margin-right: 2px; opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">💶</div>
+  <div class="header-title">
+    Bant Fiyat Hesaplama
+    <span>Saha Teklif Aracı</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Bant Boyutları -->
+  <div class="section-label">Bant Boyutları</div>
+  <div class="card">
+    <div class="input-row">
+      <div class="input-label">
+        Bant eni
+        <small>Genişlik</small>
+      </div>
+      <div class="input-wrap">
+        <input type="number" id="bantEn" placeholder="0" min="0" step="10">
+        <div class="input-unit">mm</div>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-label">
+        Bant boyu
+        <small>Uzunluk</small>
+      </div>
+      <div class="input-wrap">
+        <input type="number" id="bantBoy" placeholder="0" min="0" step="100">
+        <div class="input-unit">mm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fiyatlandırma -->
+  <div class="section-label">Fiyatlandırma</div>
+  <div class="card">
+    <div class="input-row">
+      <div class="input-label">
+        Bant m² fiyatı
+        <small>Düz bant birim fiyatı</small>
+      </div>
+      <div class="input-wrap">
+        <input type="number" id="metrekareFiyat" placeholder="0.00" min="0" step="0.5">
+        <div class="input-unit">€/m²</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profil -->
+  <div class="section-label">Profil</div>
+  <div class="card">
+    <div class="profil-toggle-row" onclick="toggleProfil()">
+      <div class="toggle-label">
+        Profil var mı?
+        <small>Bant üzerinde profil / nervür</small>
+      </div>
+      <div class="toggle-switch" id="profilToggle"></div>
+    </div>
+    <div class="profil-fields" id="profilFields">
+      <div class="profil-header">⬛ Profil Detayları</div>
+      <div class="input-row">
+        <div class="input-label">
+          Profil hatvesi
+          <small>Profiller arası mesafe</small>
+        </div>
+        <div class="input-wrap">
+          <input type="number" id="profilHatve" placeholder="0" min="1" step="10">
+          <div class="input-unit">mm</div>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-label">
+          Profil birim fiyatı
+          <small>Adet başına fiyat</small>
+        </div>
+        <div class="input-wrap">
+          <input type="number" id="profilFiyat" placeholder="0.00" min="0" step="0.1">
+          <div class="input-unit">€/ad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="hesapla()">
+    <span>💶</span> Fiyat Hesapla
+  </button>
+  <button class="reset-btn" onclick="sifirla()">↺ Sıfırla</button>
+
+  <div class="error-msg" id="errorMsg"></div>
+
+  <!-- Sonuç -->
+  <div class="result-panel show" id="resultPanel">
+    <div class="result-header">✓ Teklif Özeti</div>
+
+    <div class="result-summary" id="resultSummary">
+    <div class="summary-row">
+      <span class="slabel">Bant boyutu</span>
+      <span class="sval">100000 × 3000 mm</span>
+    </div>
+    <div class="summary-row">
+      <span class="slabel">Metrekare</span>
+      <span class="sval">300.0000 m²</span>
+    </div>
+  </div>
+
+    <div class="price-block" id="priceBlock">
+    <div class="price-row">
+      <span class="plabel">Bant (300.0000 m² × €15.3)</span>
+      <span class="pval"><span class="euro-sign">€</span>4590.00</span>
+    </div>
+  
+    <div class="price-row">
+      <span class="plabel">KDV hariç toplam</span>
+      <span class="pval"><span class="euro-sign">€</span>4590.00</span>
+    </div>
+    <div class="price-row">
+      <span class="plabel">KDV (%20)</span>
+      <span class="pval"><span class="euro-sign">€</span>918.00</span>
+    </div>
+    <div class="price-row total">
+      <span class="plabel">GENEL TOPLAM</span>
+      <span class="pval"><span class="euro-sign">€</span>5508.00</span>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+<script>
+let profilAcik = false;
+
+function toggleProfil() {
+  profilAcik = !profilAcik;
+  document.getElementById('profilToggle').className = 'toggle-switch' + (profilAcik ? ' on' : '');
+  document.getElementById('profilFields').className = 'profil-fields' + (profilAcik ? ' show' : '');
+}
+
+function hesapla() {
+  const errEl = document.getElementById('errorMsg');
+  const resEl = document.getElementById('resultPanel');
+  errEl.className = 'error-msg';
+  resEl.className = 'result-panel';
+
+  const en = parseFloat(document.getElementById('bantEn').value);
+  const boy = parseFloat(document.getElementById('bantBoy').value);
+  const mkFiyat = parseFloat(document.getElementById('metrekareFiyat').value);
+
+  if (!en || en <= 0) { showError('⚠ Bant enini giriniz.'); return; }
+  if (!boy || boy <= 0) { showError('⚠ Bant boyunu giriniz.'); return; }
+  if (!mkFiyat || mkFiyat <= 0) { showError('⚠ Metrekare fiyatını giriniz.'); return; }
+
+  // Metrekare hesabı (mm² → m²)
+  const metrekare = (en * boy) / 1_000_000;
+  const bantTutar = metrekare * mkFiyat;
+
+  // Profil hesabı
+  let profilAdet = 0;
+  let profilTutar = 0;
+  let profilHatve = 0;
+  let profilFiyat = 0;
+
+  if (profilAcik) {
+    profilHatve = parseFloat(document.getElementById('profilHatve').value);
+    profilFiyat = parseFloat(document.getElementById('profilFiyat').value);
+
+    if (!profilHatve || profilHatve <= 0) { showError('⚠ Profil hatvesini giriniz.'); return; }
+    if (!profilFiyat || profilFiyat <= 0) { showError('⚠ Profil birim fiyatını giriniz.'); return; }
+
+    profilAdet = Math.floor(boy / profilHatve);
+    profilTutar = profilAdet * profilFiyat;
+  }
+
+  const araToplam = bantTutar + profilTutar;
+  const kdv = araToplam * 0.20;
+  const genelToplam = araToplam + kdv;
+
+  // Özet
+  const summaryEl = document.getElementById('resultSummary');
+  let summaryHTML = `
+    <div class="summary-row">
+      <span class="slabel">Bant boyutu</span>
+      <span class="sval">${en} × ${boy} mm</span>
+    </div>
+    <div class="summary-row">
+      <span class="slabel">Metrekare</span>
+      <span class="sval">${metrekare.toFixed(4)} m²</span>
+    </div>
+  `;
+
+  if (profilAcik) {
+    summaryHTML += `
+      <div class="summary-row">
+        <span class="slabel">Profil adedi</span>
+        <span class="sval">${profilAdet} adet (her ${profilHatve} mm'de bir)</span>
+      </div>
+    `;
+  }
+
+  summaryEl.innerHTML = summaryHTML;
+
+  // Fiyat bloğu
+  const priceEl = document.getElementById('priceBlock');
+  let priceHTML = `
+    <div class="price-row">
+      <span class="plabel">Bant (${metrekare.toFixed(4)} m² × €${mkFiyat})</span>
+      <span class="pval"><span class="euro-sign">€</span>${bantTutar.toFixed(2)}</span>
+    </div>
+  `;
+
+  if (profilAcik) {
+    priceHTML += `
+      <div class="price-row">
+        <span class="plabel">Profil (${profilAdet} ad × €${profilFiyat})</span>
+        <span class="pval"><span class="euro-sign">€</span>${profilTutar.toFixed(2)}</span>
+      </div>
+    `;
+  }
+
+  priceHTML += `
+    <div class="price-row">
+      <span class="plabel">KDV hariç toplam</span>
+      <span class="pval"><span class="euro-sign">€</span>${araToplam.toFixed(2)}</span>
+    </div>
+    <div class="price-row">
+      <span class="plabel">KDV (%20)</span>
+      <span class="pval"><span class="euro-sign">€</span>${kdv.toFixed(2)}</span>
+    </div>
+    <div class="price-row total">
+      <span class="plabel">GENEL TOPLAM</span>
+      <span class="pval"><span class="euro-sign">€</span>${genelToplam.toFixed(2)}</span>
+    </div>
+  `;
+
+  priceEl.innerHTML = priceHTML;
+
+  resEl.className = 'result-panel show';
+  resEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.className = 'error-msg show';
+}
+
+function sifirla() {
+  document.querySelectorAll('input[type=number]').forEach(i => i.value = '');
+  document.getElementById('resultPanel').className = 'result-panel';
+  document.getElementById('errorMsg').className = 'error-msg';
+  if (profilAcik) toggleProfil();
+}
+</script>
+
+
+</body></html>
